@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="js/layui-2.5.4/css/layui.css">
+  <script src="js/layui-2.5.4/layui.js"></script>
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+	<button type="button" class="layui-btn">视野开放搜索</button>
+	<!-- <button type="button" class="layui-btn layui-btn-normal">Opensearch搜素引擎</button>
+	<button type="button" class="layui-btn layui-btn-warm">高效稳定</button>
+	<a href="https://www.seeyii.com" class="layui-btn">查看视野官网</a> -->
+	<br></br>
+	<form class="layui-form" action="http://192.168.20.18:8080/bond-web/bondRisk/searchBondInfoBondRiskInter.dhtml">
+		<input type="hidden" name="userId" value="1">
+		<input type="hidden" name="infoSource" value="中信建投证券股份有限公司">
+		<div class="layui-form-item">
+			<label class="layui-form-label">开放搜素</label>
+			<div class="layui-input-block">
+				<input type="text" name="searchContent" required
+					lay-verify="required" placeholder="搜索内容" autocomplete="off"
+					class="layui-input">
+			</div>
+		</div>
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">文本域</label>
+			<div class="layui-input-block">
+				<textarea name="companyName" placeholder="备用"
+					class="layui-textarea"></textarea>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+		</div>
+	</form>
+	<div class="layui-form-item layui-form-text">
+		<label class="layui-form-label">文本域</label>
+		<div class="layui-input-block">
+			<textarea name="content" placeholder="请输入内容" id="content"
+				class="layui-textarea"></textarea>
+		</div>
+	</div>
+	<!-- 用户表 -->
+    <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table> 
+	<script>
+	
+	layui.use('table', function(){
+		  var table = layui.table;
+		  //方法级渲染
+		  table.render({
+		    elem: '#LAY_table_user'
+		    ,url: 'http://192.168.20.18:8080/bond-web/bondRisk/searchBondInfoBondRiskInter.dhtml'
+		    ,cols: [[
+		      {checkbox: true, fixed: true}
+		      ,{field:'id', title: 'ID', width:80, sort: true, fixed: true}
+		      ,{field:'username', title: '用户名', width:80}
+		      ,{field:'sex', title: '性别', width:80, sort: true}
+		      ,{field:'city', title: '城市', width:80}
+		      ,{field:'sign', title: '签名'}
+		      ,{field:'experience', title: '积分', sort: true, width:80}
+		      ,{field:'score', title: '评分', sort: true, width:80}
+		      ,{field:'classify', title: '职业', width:80}
+		      ,{field:'wealth', title: '财富', sort: true, width:135}
+		    ]]
+		    ,id: 'testReload'
+		    ,page: true
+		    ,height: 310
+		  }); 
+		});
+	//dianji
+	  $('#layui-btn').on('click', function(){
+		  alert("异常！");
+       });
+     layui.use('form', function() {
+	 function login() {
+         $.ajax({
+         //几个参数需要注意一下
+             type: "POST",//方法类型
+             dataType: "json",//预期服务器返回的数据类型
+             //url: "http://192.168.1.198:8082/opensearch-web/bond/queryCompanyInfoBondInter.dhtml" ,//url
+             data: $('#layui-form').serialize(),
+             success: function (result) {
+            	 table.reload('testReload')
+            	  alert("SUCCESS");
+            	 $("#content").val(result);
+            	 
+                 if (result.resultCode == 200) {
+                     alert("SUCCESS");
+                 }
+             },
+             error : function() {
+                 alert("异常！");
+             }
+         });
+     }
+		});
+	</script>
+</body>
+</html>
