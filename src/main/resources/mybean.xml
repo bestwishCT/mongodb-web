@@ -55,5 +55,15 @@
       <property name="name"  value="Nuha" />
       <property name="age"  value="2"/>
    </bean>
-   
+   <!-- 自动装配 -->
+      <!-- Definition for textEditor bean -->
+   <bean id="abt" class="com.myspring.AutoByNameType" 
+      autowire="byName">
+      <property name="name" value="Generic Text Editor" />
+   </bean>
+
+   <bean id="child" class="com.myspring.Child" >
+   </bean>
+   <bean id="teacher" class="com.myspring.Teacher" >
+   </bean>
 </beans>
