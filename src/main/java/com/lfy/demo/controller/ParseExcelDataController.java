@@ -168,7 +168,7 @@ public class ParseExcelDataController {
 			for (JSONObject zbObj : zb) {
 				String name = zbObj.getString(relationfield);//关联字段
 				for (JSONObject fbObj : fb) {
-					if(name.equals(fbObj.getString(relationfield))){
+					if(name.equalsIgnoreCase(fbObj.getString(relationfield))){
 						for(String cusKey:popuStr){
 							if(zbObj.containsKey(cusKey)){
 								fbObj.put(cusKey, zbObj.getString(cusKey));
